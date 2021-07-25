@@ -1,11 +1,21 @@
+import { Fragment, useState } from "react";
 import { NavLink } from "react-router-dom";
 
-import { RiDashboardLine, RiGalleryLine, RiLogoutBoxRLine, RiPencilLine, RiSettings3Line } from 'react-icons/ri';
+import { RiDashboardLine, RiGalleryLine, RiLogoutBoxRLine, RiPencilLine, RiSettings3Line, RiMenuLine, RiCloseLine  } from 'react-icons/ri';
 import styles from './SideNavbar.module.css'
 
 const SideNavbar = () => {
+    const [isOpen, setIsOpen] = useState(false);
+
+    const navToggleHandler = () => {
+        setIsOpen(!isOpen);
+
+        console.log(navToggleHandler);
+    }
+
     return (
-            <nav className={styles.sidenav}>
+        <Fragment>
+            <nav className={`${styles.sidenav} ${isOpen ? styles.navOpen : styles.navClosed }`}>
                 <ul>
                     <li className={styles.list}>
                         <NavLink to='/dashboard' activeClassName={styles.active}>
@@ -47,8 +57,14 @@ const SideNavbar = () => {
                             <span className={styles.title}>Sign Out</span>
                         </NavLink>
                     </li>
+                    <b></b>
                 </ul>
             </nav>
+            <div onClick={navToggleHandler}className={`${styles.toggle} ${isOpen ? styles.open : (styles.closed + ' ' + styles.inactive)} `}>
+                    {isOpen && <RiMenuLine className={styles.icono} />}
+                    {!isOpen && <RiCloseLine className={styles.icono} />}
+            </div>
+        </Fragment>
     );
 }
 
